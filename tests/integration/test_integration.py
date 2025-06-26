@@ -8,6 +8,7 @@ dependency injection, gRPC communication, and service behavior.
 
 import grpc
 import pytest
+import pytest_asyncio
 from concurrent import futures
 
 from py_micro.model.template_service_pb2 import (
@@ -24,7 +25,7 @@ from py_micro.service.services import TemplateService
 class TestMicroserviceIntegration:
     """Integration tests for the complete py_micro.service."""
 
-    @pytest.fixture
+    @pytest_asyncio.fixture
     async def grpc_server_and_channel(self):
         """Set up a test gRPC server and client channel."""
         # Create container and wire dependencies

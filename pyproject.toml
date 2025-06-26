@@ -74,5 +74,5 @@ addopts = [
     "--cov-fail-under=100",
     "-v"
 ]
-asyncio_mode = "auto"
+asyncio_mode = "strict"
 

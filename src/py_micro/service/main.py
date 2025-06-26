@@ -9,7 +9,6 @@ import asyncio
 import signal
 import sys
 import logging
-import traceback
 import functools
 from concurrent import futures
 from typing import Optional
@@ -54,7 +53,7 @@ class GrpcServer:
         self._config = ServerConfig(**config)
         self._template_service = template_service
         self._logger = logger.bind(component="GrpcServer")
-        self._server: Optional[grpc.Server] = None
+        self._server: Optional[grpc.aio.Server] = None
         self._shutdown_event = asyncio.Event()
 
     async def start(self) -> None:
@@ -67,7 +66,7 @@ class GrpcServer:
         self._logger.info("Starting gRPC server")
 
         # Create server with thread pool
-        self._server = grpc.server(
+        self._server = grpc.aio.server(
             futures.ThreadPoolExecutor(max_workers=self._config.max_workers)
         )
 
@@ -94,7 +93,7 @@ class GrpcServer:
         self._server.add_insecure_port(listen_addr)
 
         # Start server
-        self._server.start()
+        await self._server.start()
 
         self._logger.info(
             "gRPC server started",
@@ -121,11 +120,11 @@ class GrpcServer:
         self._shutdown_event.set()
 
         # Graceful shutdown
-        self._server.stop(self._config.grace_period)
+        await self._server.stop(self._config.grace_period)
 
         self._logger.info("gRPC server stopped")
 
-    def handle_signal(self, signum: int) -> None:
+    async def handle_signal(self, signum: int) -> None:
         """
         Handle shutdown signals.
 
@@ -133,7 +132,7 @@ class GrpcServer:
             signum: Signal number
         """
         self._logger.info("Received shutdown signal", signal=signum)
-        asyncio.create_task(self.stop())
+        await self.stop()
 
 
 def setup_logging(config: LoggingConfig) -> None:
@@ -251,7 +250,6 @@ def run() -> None:
         sys.exit(0)
     except Exception as e:
         print(f"Application failed to start: {e}")
-        traceback.print_exc()
         sys.exit(1)
 
 

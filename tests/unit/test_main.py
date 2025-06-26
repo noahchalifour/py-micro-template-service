@@ -123,7 +123,7 @@ class TestGrpcServer:
         # Verify logger was bound
         mock_dependencies["logger"].bind.assert_called_once_with(component="GrpcServer")
 
-    @patch("grpc.server")
+    @patch("grpc.aio.server")
     @patch(
         "py_micro.model.template_service_pb2_grpc.add_TemplateServiceServicer_to_server"
     )
@@ -159,7 +159,7 @@ class TestGrpcServer:
         mock_server.add_insecure_port.assert_called_once_with("0.0.0.0:50051")
         mock_server.start.assert_called_once()
 
-    @patch("grpc.server")
+    @patch("grpc.aio.server")
     @pytest.mark.asyncio
     async def test_start_fail_server_create(self, mock_grpc_server, mock_dependencies):
         """Test server start when GRPC server creation fails."""
@@ -171,7 +171,7 @@ class TestGrpcServer:
 
         assert server._server is None
 
-    @patch("grpc.server")
+    @patch("grpc.aio.server")
     @pytest.mark.asyncio
     async def test_start_with_custom_config(self, mock_grpc_server, mock_dependencies):
         """Test server start with custom configuration."""
@@ -229,7 +229,7 @@ class TestGrpcServer:
         """Test signal handling."""
         server = GrpcServer(**mock_dependencies)
 
-        server.handle_signal(signal.SIGINT)
+        await server.handle_signal(signal.SIGINT)
 
 
 class TestMainFunction:
@@ -410,8 +410,7 @@ class TestRunFunction:
 
     @patch("py_micro.service.main.asyncio.run")
     @patch("sys.exit")
-    @patch("builtins.print")
-    def test_run_exception_handling(self, mock_print, mock_exit, mock_asyncio_run):
+    def test_run_exception_handling(self, mock_exit, mock_asyncio_run):
         """Test run function exception handling."""
         mock_asyncio_run.side_effect = Exception("Test error")
 
