@@ -7,11 +7,9 @@ and application startup/shutdown functionality.
 
 import asyncio
 import signal
-import sys
 from unittest.mock import Mock, patch, AsyncMock, MagicMock
 from py_micro.service.config.server_config import ServerConfig
 import pytest
-import grpc
 
 from py_micro.service.main import GrpcServer, main, run, setup_logging
 from py_micro.service.config import ApplicationConfig, LoggingConfig
@@ -231,7 +229,7 @@ class TestGrpcServer:
         """Test signal handling."""
         server = GrpcServer(**mock_dependencies)
 
-        await server.handle_signal(signal.SIGINT)
+        server.handle_signal(signal.SIGINT)
 
 
 class TestMainFunction:
@@ -318,12 +316,12 @@ class TestMainFunction:
         mock_config.logging.return_value = dict()
 
         mock_logger = Mock()
-        mock_user_service = Mock()
+        mock_template_service = Mock()
 
         mock_container = Mock()
         mock_container.config = mock_config
         mock_container.logger.return_value = mock_logger
-        mock_container.user_service.return_value = mock_user_service
+        mock_container.services.template_service.return_value = mock_template_service
         mock_container.wire = Mock()
 
         mock_container_class.return_value = mock_container
@@ -361,12 +359,12 @@ class TestMainFunction:
         mock_config.logging.return_value = dict()
 
         mock_logger = Mock()
-        mock_user_service = Mock()
+        mock_template_service = Mock()
 
         mock_container = Mock()
         mock_container.config = mock_config
         mock_container.logger.return_value = mock_logger
-        mock_container.user_service.return_value = mock_user_service
+        mock_container.services.template_service.return_value = mock_template_service
         mock_container.wire = Mock()
 
         mock_container_class.return_value = mock_container

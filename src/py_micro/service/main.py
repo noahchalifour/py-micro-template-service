@@ -94,7 +94,7 @@ class GrpcServer:
         self._server.add_insecure_port(listen_addr)
 
         # Start server
-        await self._server.start()
+        self._server.start()
 
         self._logger.info(
             "gRPC server started",
@@ -121,11 +121,11 @@ class GrpcServer:
         self._shutdown_event.set()
 
         # Graceful shutdown
-        await self._server.stop(self._config.grace_period)
+        self._server.stop(self._config.grace_period)
 
         self._logger.info("gRPC server stopped")
 
-    async def handle_signal(self, signum: int) -> None:
+    def handle_signal(self, signum: int) -> None:
         """
         Handle shutdown signals.
 
@@ -133,7 +133,7 @@ class GrpcServer:
             signum: Signal number
         """
         self._logger.info("Received shutdown signal", signal=signum)
-        await self.stop()
+        asyncio.create_task(self.stop())
 
 
 def setup_logging(config: LoggingConfig) -> None:
