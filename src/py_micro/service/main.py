@@ -16,6 +16,7 @@ from typing import Optional
 
 from grpc_reflection.v1alpha import reflection
 import grpc
+from py_micro.service.config.logging_config import LoggingConfig
 import structlog
 from dependency_injector.wiring import inject, Provide, as_
 
@@ -72,7 +73,7 @@ class GrpcServer:
 
         if self._server is None:
             self._logger.error("Failed to create server")
-            sys.exit(1)
+            return
 
         # Add services to server
         add_TemplateServiceServicer_to_server(self._template_service, self._server)
@@ -93,7 +94,7 @@ class GrpcServer:
         self._server.add_insecure_port(listen_addr)
 
         # Start server
-        self._server.start()
+        await self._server.start()
 
         self._logger.info(
             "gRPC server started",
@@ -120,11 +121,11 @@ class GrpcServer:
         self._shutdown_event.set()
 
         # Graceful shutdown
-        self._server.stop(self._config.grace_period)
+        await self._server.stop(self._config.grace_period)
 
         self._logger.info("gRPC server stopped")
 
-    def handle_signal(self, signum: int) -> None:
+    async def handle_signal(self, signum: int) -> None:
         """
         Handle shutdown signals.
 
@@ -132,10 +133,10 @@ class GrpcServer:
             signum: Signal number
         """
         self._logger.info("Received shutdown signal", signal=signum)
-        asyncio.create_task(self.stop())
+        await self.stop()
 
 
-def setup_logging(config: ApplicationConfig) -> None:
+def setup_logging(config: LoggingConfig) -> None:
     """
     Set up structured logging configuration.
 
@@ -143,10 +144,10 @@ def setup_logging(config: ApplicationConfig) -> None:
         config: Application configuration
     """
     logging.basicConfig(
-        level=config.logging.level(),
+        level=config.level,
     )
 
-    if config.logging.format() == "json":
+    if config.format == "json":
         structlog.configure(
             processors=[
                 structlog.stdlib.filter_by_level,
@@ -197,7 +198,7 @@ async def main() -> None:
 
     # Get configuration and set up logging
     config = container.config
-    setup_logging(config)
+    setup_logging(LoggingConfig(**config.logging()))
 
     # Get logger
     logger = container.logger()
@@ -254,5 +255,5 @@ def run() -> None:
         sys.exit(1)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     run()

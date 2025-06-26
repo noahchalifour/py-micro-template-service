@@ -5,6 +5,7 @@ This module provides common fixtures and utilities for testing.
 """
 
 import os
+from py_micro.service.config.server_config import ServerConfig
 import pytest
 from unittest.mock import Mock, MagicMock
 from dependency_injector import providers
@@ -35,6 +36,12 @@ def test_config():
         debug=True,
         environment="test",
     )
+
+
+@pytest.fixture
+def test_server_config():
+    """Create a test server configuration."""
+    return ServerConfig().model_dump()
 
 
 @pytest.fixture
