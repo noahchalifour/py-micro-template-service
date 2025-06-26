@@ -2,7 +2,7 @@ from unittest.mock import patch
 import pytest
 
 from py_micro.model.template_service_pb2 import HealthCheckRequest, HealthCheckResponse
-from py_micro.service.services import TemplateService
+from py_micro.service.template_service import TemplateService
 
 
 class TestTemplateService:

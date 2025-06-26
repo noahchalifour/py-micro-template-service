@@ -13,7 +13,7 @@ import pytest
 
 from py_micro.service.main import GrpcServer, main, run, setup_logging
 from py_micro.service.config import ApplicationConfig, LoggingConfig
-from py_micro.service.services import TemplateService
+from py_micro.service.template_service import TemplateService
 
 
 class TestSetupLogging:

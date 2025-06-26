@@ -1,7 +1,7 @@
 from dependency_injector import providers
 
 from py_micro.service.containers import ApplicationContainer, ServicesContainer
-from py_micro.service.services import TemplateService
+from py_micro.service.template_service import TemplateService
 
 
 class TestServicesContainer:

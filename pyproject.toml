@@ -16,6 +16,7 @@ pydantic = "^2.5.0"
 pydantic-settings = "^2.1.0"
 structlog = "^23.2.0"
 rich = "^14.0.0"
+modelrepo = "^1.0.0"
 py-micro-model = {path = "../model", develop = true}
 
 [tool.poetry.group.dev.dependencies]

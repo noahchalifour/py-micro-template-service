@@ -1,6 +1,6 @@
 from dependency_injector import containers, providers
 
-from py_micro.service.services import TemplateService
+from py_micro.service.template_service import TemplateService
 
 
 class ServicesContainer(containers.DeclarativeContainer):

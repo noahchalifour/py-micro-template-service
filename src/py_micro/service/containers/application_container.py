@@ -1,4 +1,5 @@
 from dependency_injector import containers, providers
+from py_micro.service.containers.repositories_container import RepositoriesContainer
 import structlog
 
 from py_micro.service.config import ApplicationConfig
@@ -21,7 +22,7 @@ class ApplicationContainer(containers.DeclarativeContainer):
     wiring_config = containers.WiringConfiguration(
         modules=[
             "py_micro.service.main",
-            "py_micro.service.services.template_service",
+            "py_micro.service.template_service",
         ]
     )
 
@@ -36,3 +37,6 @@ class ApplicationContainer(containers.DeclarativeContainer):
 
     # Services container
     services = providers.Container(ServicesContainer, config=config.services)
+
+    # Repositories container
+    repositories = providers.Container(RepositoriesContainer, config=config.repository)

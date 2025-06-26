@@ -10,6 +10,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from .server_config import ServerConfig
 from .logging_config import LoggingConfig
+from .repository_config import RepositoryConfig
 
 
 class ApplicationConfig(BaseSettings):
@@ -23,6 +24,7 @@ class ApplicationConfig(BaseSettings):
     # Nested configurations
     server: ServerConfig = Field(default_factory=ServerConfig)
     logging: LoggingConfig = Field(default_factory=LoggingConfig)
+    repository: RepositoryConfig = Field(default_factory=RepositoryConfig)
 
     model_config = SettingsConfigDict(
         env_file=".env",

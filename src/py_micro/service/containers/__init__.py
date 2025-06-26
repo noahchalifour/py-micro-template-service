@@ -7,5 +7,6 @@ providing centralized configuration and management of all application dependenci
 
 from .application_container import ApplicationContainer
 from .services_container import ServicesContainer
+from .repositories_container import RepositoriesContainer
 
-__all__ = ["ApplicationContainer", "ServicesContainer"]
+__all__ = ["ApplicationContainer", "ServicesContainer", "RepositoriesContainer"]

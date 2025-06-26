@@ -24,8 +24,8 @@ from py_micro.model.template_service_pb2_grpc import (
     add_TemplateServiceServicer_to_server,
 )
 from py_micro.service.containers import ApplicationContainer
-from py_micro.service.config import ApplicationConfig, ServerConfig
-from py_micro.service.services import TemplateService
+from py_micro.service.config import ServerConfig
+from py_micro.service.template_service import TemplateService
 
 
 class GrpcServer:
