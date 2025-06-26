@@ -1204,21 +1204,19 @@ files = [
 
 [[package]]
 name = "py-micro-model"
-version = "0.1.0"
+version = "1.0.0"
 description = "gRPC model definitions for Python microservice template"
 optional = false
-python-versions = "^3.12"
+python-versions = "<4.0,>=3.12"
 groups = ["main"]
-files = []
-develop = true
+files = [
+    {file = "py_micro_model-1.0.0-py3-none-any.whl", hash = "sha256:0663d1fd2ae29b302b55f959725b6ef537d6114ca13d8fcd48eaa63f05fee40a"},
+    {file = "py_micro_model-1.0.0.tar.gz", hash = "sha256:119ba17df0fa09073fcbea4c8b418347ff6fc7a7da9ee9597d1b7291045bc5ae"},
+]
 
 [package.dependencies]
-grpcio = "^1.73.0"
-grpcio-tools = "^1.73.0"
-
-[package.source]
-type = "directory"
-url = "../model"
+grpcio = ">=1.73.0,<2.0.0"
+grpcio-tools = ">=1.73.0,<2.0.0"
 
 [[package]]
 name = "pycodestyle"
@@ -1980,4 +1978,4 @@ watchmedo = ["PyYAML (>=3.10)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "45549f4f27ee2897e97c5a7b1be82a1e61aabfca88c1f2453fbf148e31c2ffbb"
+content-hash = "7eb6ddf99669904f02ea3e4aae50ee8b92e10b4ade86bf8509c4aa903b9d788e"

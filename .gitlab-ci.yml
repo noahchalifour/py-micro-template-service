@@ -9,6 +9,8 @@ default:
 
 stages:
   - test
+  - build
+  - publish
 
 test:
   stage: test
@@ -26,3 +28,34 @@ test:
         path: coverage.xml
     paths:
       - coverage.xml # Also upload the XML report as a regular artifact (optional, for debugging/download)
+
+build:
+  stage: build
+  script:
+    # Extract version from git tag (remove 'v' prefix) if tag exists
+    - if [ -n "$CI_COMMIT_TAG" ]; then export VERSION=${CI_COMMIT_TAG#v}; fi
+    # Update version in pyproject.toml if tag exists
+    - if [ -n "$CI_COMMIT_TAG" ]; then poetry version $VERSION; fi
+    # Build the package
+    - poetry build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+
+publish:
+  stage: publish
+  script:
+    # Extract version from git tag (remove 'v' prefix)
+    - export VERSION=${CI_COMMIT_TAG#v}
+    # Update version in pyproject.toml
+    - poetry version $VERSION
+    # Configure PyPI credentials
+    - poetry config pypi-token.pypi $PYPI_TOKEN
+    # Publish to PyPI
+    - poetry publish --no-interaction
+  dependencies:
+    - build
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+      # Only run when tag matches the format v1.0.0
