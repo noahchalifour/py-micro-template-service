@@ -156,12 +156,13 @@ grpcurl -plaintext localhost:50051 user_service.v1.UserService/HealthCheck
 // In py-micro-model/proto/my_service.proto
 service MyService {
     rpc MyMethod(MyRequest) returns (MyResponse);
+}
 ```
 
 2. **Implement the service:**
 ```python
 # In src/py_micro/service/services/my_service.py
-# from generated.my_service_pb2_grpc import MyServiceServicer
+from generated.my_service_pb2_grpc import MyServiceServicer
 
 class MyService(MyServiceServicer):
     def MyMethod(self, request, context):
