@@ -124,7 +124,7 @@ class GrpcServer:
 
         self._logger.info("gRPC server stopped")
 
-    async def handle_signal(self, signum: int) -> None:
+    def handle_signal(self, signum: int) -> None:
         """
         Handle shutdown signals.
 
@@ -132,7 +132,7 @@ class GrpcServer:
             signum: Signal number
         """
         self._logger.info("Received shutdown signal", signal=signum)
-        await self.stop()
+        asyncio.create_task(self.stop())
 
 
 def setup_logging(config: LoggingConfig) -> None:

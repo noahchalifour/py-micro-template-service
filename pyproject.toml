@@ -34,7 +34,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-microservice = "py_micro.service.main:main"
+microservice = "py_micro.service.main:run"
 
 [tool.black]
 line-length = 88

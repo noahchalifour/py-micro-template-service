@@ -229,7 +229,7 @@ class TestGrpcServer:
         """Test signal handling."""
         server = GrpcServer(**mock_dependencies)
 
-        await server.handle_signal(signal.SIGINT)
+        server.handle_signal(signal.SIGINT)
 
 
 class TestMainFunction:
