@@ -140,7 +140,7 @@ The service provides a gRPC API. You can test it using:
 1. **grpcurl** (recommended):
 ```bash
 # Health check
-grpcurl -plaintext localhost:50051 user_service.v1.UserService/HealthCheck
+grpcurl -plaintext localhost:50051 template_service.v1.TemplateService/HealthCheck
 ```
 
 2. **Python client** (see integration tests for examples)

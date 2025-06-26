@@ -1,0 +1,28 @@
+default:
+  image: python:3.12 # Use a suitable Python version
+  before_script:
+    - python --version
+    - pip install poetry # Install Poetry in the CI environment
+    - poetry config virtualenvs.in-project true # Create virtualenv in project directory
+    - poetry install --without dev # Install production dependencies first (optional, but good practice)
+    - poetry install --with dev # Install dev dependencies (including pytest-cov)
+
+stages:
+  - test
+
+test:
+  stage: test
+  script:
+    - poetry run pytest --cov=./src --cov-report=term --cov-report=xml:coverage.xml --junitxml=report.xml
+    # Replace 'your_project_folder' with the actual folder name of your Python source code.
+    # If your source code is directly in the root, you might use '.' or your package name.
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/' # Regex to extract coverage percentage
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+    paths:
+      - coverage.xml # Also upload the XML report as a regular artifact (optional, for debugging/download)
