@@ -1203,15 +1203,15 @@ files = [
 ]
 
 [[package]]
-name = "py-micro-model"
+name = "py-micro-models"
 version = "1.0.0"
-description = "gRPC model definitions for Python microservice template"
+description = "gRPC model definitions for Python microservies"
 optional = false
 python-versions = "<4.0,>=3.12"
 groups = ["main"]
 files = [
-    {file = "py_micro_model-1.0.0-py3-none-any.whl", hash = "sha256:0663d1fd2ae29b302b55f959725b6ef537d6114ca13d8fcd48eaa63f05fee40a"},
-    {file = "py_micro_model-1.0.0.tar.gz", hash = "sha256:119ba17df0fa09073fcbea4c8b418347ff6fc7a7da9ee9597d1b7291045bc5ae"},
+    {file = "py_micro_models-1.0.0-py3-none-any.whl", hash = "sha256:b4468d211f24145e16273f6e71b4398b28d22dea13e2243e1c0700a94efbd198"},
+    {file = "py_micro_models-1.0.0.tar.gz", hash = "sha256:d82def3afbdc5077346619748416dd46cec03a4a756664756398bf24c71c0029"},
 ]
 
 [package.dependencies]
@@ -1978,4 +1978,4 @@ watchmedo = ["PyYAML (>=3.10)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "7eb6ddf99669904f02ea3e4aae50ee8b92e10b4ade86bf8509c4aa903b9d788e"
+content-hash = "6daff9a2bd6c606f182541eb27d3d8233225d013fcf1d130c123a0928b376404"
