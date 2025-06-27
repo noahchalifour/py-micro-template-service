@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "py-micro-service"
+name = "py-micro-template-service"
 version = "0.1.0"
 description = "Python microservice template with gRPC and dependency injection"
 authors = ["Noah Chalifour <chalifournoah@gmail.com>"]

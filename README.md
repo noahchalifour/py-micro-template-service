@@ -1,4 +1,4 @@
-# py-micro-service
+# PyMicro Template Service
 
 A production-ready Python microservice template built with gRPC, dependency injection, and best practices.
 
@@ -45,26 +45,19 @@ This microservice template provides:
 
 ### Installation
 
-1. **Set up the model repository first:**
-```bash
-cd ../py-micro-model
-make install
-make generate
-```
-
-2. **Install service dependencies:**
+1. **Install service dependencies:**
 ```bash
 make install
 # or
 poetry install
 ```
 
-4. **Run tests:**
+2. **Run tests:**
 ```bash
 make test
 ```
 
-5. **Start the service:**
+3. **Start the service:**
 ```bash
 make run
 # or
@@ -74,11 +67,11 @@ poetry run microservice
 ## Directory Structure
 
 ```
-py-micro-service/
+py-micro-template-service/
 ├── src/py_micro/service/       # Main application code
 │   ├── config/                 # Configuration management
 │   ├── containers/             # Dependency injection containers
-│   ├── services/               # gRPC service implementations
+│   ├── template_service.py     # gRPC service implementation
 │   └── main.py                 # Application entry point
 ├── tests/                      # Test suite
 │   ├── unit/                   # Unit tests
@@ -161,8 +154,8 @@ service MyService {
 
 2. **Implement the service:**
 ```python
-# In src/py_micro/service/services/my_service.py
-from generated.my_service_pb2_grpc import MyServiceServicer
+# In src/py_micro/service/my_service.py
+from py_micro.service.my_service_pb2_grpc import MyServiceServicer
 
 class MyService(MyServiceServicer):
     def MyMethod(self, request, context):
@@ -179,7 +172,7 @@ my_service = providers.Factory(MyService, ...)
 4. **Add to server:**
 ```python
 # In src/py_micro/service/main.py
-from generated.my_service_pb2_grpc import add_MyServiceServicer_to_server
+from py_micro.model.my_service_pb2_grpc import add_MyServiceServicer_to_server
 add_MyServiceServicer_to_server(my_service, self._server)
 ```
 
